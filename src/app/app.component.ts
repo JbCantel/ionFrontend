@@ -30,7 +30,7 @@ export class AppComponent {
 
   constructor(
     private auth: Auth = inject(Auth)
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authStateSubscription = this.authState$.subscribe(
