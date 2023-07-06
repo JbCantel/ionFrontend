@@ -1,29 +1,24 @@
-
-import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-receita',
+  templateUrl: './receita.page.html',
+  styleUrls: ['./receita.page.scss'],
 })
-export class HomePage implements OnInit {
-public myReceita!: String;
-  public env = environment;
+export class ReceitaPage implements OnInit {
+  public myReceita!: String;
 
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient) { }
 
   ngOnInit() {
-
     this.http.get(environment.apiURL + '/receita'  ).subscribe((response) => {
       console.log('Todos os artigos:', response);
     }, (error) => {
       console.error(error)
     })
-
   }
 
   buscar(){

@@ -13,4 +13,9 @@
       <ion-title size="large">{{env.appName}}</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <p class="ion-text-center">
+    <ion-searchbar [(ngModel)]="" (search)="buscar()"></ion-searchbar>
+  </p>
+
 </ion-content>

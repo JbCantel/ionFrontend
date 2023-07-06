@@ -19,9 +19,7 @@ export class ProfilePage implements OnInit {
     this.authStateSubscription = this.authState$.subscribe(
       (userData: User | null) => {
         if (userData) {
-          console.log(userData.metadata.creationTime)
           this.user = userData
-
         }
       }
     )
