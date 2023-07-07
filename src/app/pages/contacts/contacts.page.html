@@ -3,14 +3,44 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Faça Contato!</ion-title>
+    <ion-title>Faça Contato</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">contacts</ion-title>
+      <ion-title size="large">Faça Contato</ion-title>
     </ion-toolbar>
   </ion-header>
+
+<div class="ion-padding">
+
+<p>Preencha todos os campos abaixo para entrar em contato com a equipe do <em>{{env.appName}}</em> </p>
+
+<form *ngIf="!success">
+
+  <p>
+    <ion-input label="Nome:" label-placement="floating" fill="outline" placeholder="Digite seu nome"></ion-input>
+  </p>
+  <p>
+    <ion-input label="E-mail:" inputmode="numeric" label-placement="floating" fill="outline" placeholder="Digite seu e-mail"></ion-input>
+  </p>
+  <p>
+    <ion-input label="Assunto:" label-placement="floating" fill="outline" placeholder="Digite o assunto do contato"></ion-input>
+  </p>
+  <p>
+    <ion-textarea label="Mensagem:" [autoGrow]="true" labelPlacement="floating" fill="outline"
+      placeholder="Mensagem do contato"></ion-textarea>
+  </p>
+  <p>
+    <ion-button>Enviar</ion-button>
+  </p>
+
+</form>
+
+</div>
+
+
+
 </ion-content>
