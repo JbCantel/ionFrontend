@@ -14,5 +14,8 @@
     </ion-toolbar>
   </ion-header>
 
+  <p class="ion-text-center">
+    <ion-searchbar [(ngModel)]="myReceita" (search)="buscar()"></ion-searchbar>
+  </p>
 
 </ion-content>

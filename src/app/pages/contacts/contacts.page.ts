@@ -1,7 +1,7 @@
 import { environment } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-contacts',
@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ContactsPage implements OnInit {
 
-  public env = environment;
+  env: any = environment;
   contactForm!: FormGroup;
   contact!: any;
   success: boolean = false;
@@ -18,17 +18,20 @@ export class ContactsPage implements OnInit {
 
   validationMessages: any = {
     name: {
-      required: 'O nome é obrigatório.'
+      required: 'O nome é obrigatório.',
+      minlength: 'O nome está muito curto.'
     },
     email: {
       required: 'O email é obrigatório.',
       email: 'Digite um email válido.'
     },
     subject: {
-      required: 'O assunto é obrigatório.'
+      required: 'O assunto é obrigatório.',
+      minlength: 'O assunto está muito curto.'
     },
     message: {
-      required: 'A mensagem é obrigatória.'
+      required: 'A mensagem é obrigatória.',
+      minlength: 'A mensagem está muito curta.'
     }
   }
 
@@ -40,38 +43,25 @@ export class ContactsPage implements OnInit {
   }
 
   constructor(
-    // Injeção de dependências.
     private formBuilder: FormBuilder,
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.createForm();
     this.success = false;
-
     this.contactForm.valueChanges.subscribe(() => {
-      // this.updateValidationMessages();
+      this.updateValidationMessages();
     });
   }
 
   createForm() {
     this.contactForm = this.formBuilder.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3)
-        ]
-      ],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
-      subject: ['', [Validators.required, Validators.minLength(3)]],
-      message: ['', [Validators.required, Validators.minLength(5)]]
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      message: ['', Validators.required]
     });
   }
 
@@ -92,5 +82,32 @@ export class ContactsPage implements OnInit {
     }
   }
 
+  sendContact() {
+    if (this.contactForm.invalid) return;
+    this.contact = this.contactForm.value;
+    this.contact.date = new Date();
+    this.contact.status = 'sended';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    this.http.post(environment.apiURL + '/contacts', this.contact, httpOptions)
+      .subscribe(
+        (data) => {
+          this.firstName = this.contact.name.split(' ')[0];
+          this.success = true;
+        },
+        (error) => {
+          alert('Oooops!\n' + error.message);
+        }
+      );
+    this.contactForm.reset();
+  }
+
+  reset() {
+    this.success = false;
+    return false;
+  }
 
 }
