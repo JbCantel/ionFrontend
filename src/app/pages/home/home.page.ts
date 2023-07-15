@@ -18,6 +18,8 @@ public myReceita!: String;
 
   ngOnInit() {
 
+
+
     this.http.get(environment.apiURL + '/receita'  ).subscribe((response) => {
       console.log('Todos os artigos:', response);
     }, (error) => {
@@ -30,6 +32,6 @@ public myReceita!: String;
     this.http.get(environment.apiURL + this.myReceita + '/json')
     .subscribe(response=> {console.log(response)})
 
-}
+  }
 
 }
